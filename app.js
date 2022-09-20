@@ -20,24 +20,11 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 
 // CLICK START
-const start = document.querySelector('h1') // change name
+const startBtn = document.querySelector('#quizStartBtn') // change name
 const quizContainer = document.querySelector('.quiz__container')
 // test clone node
 
-start.addEventListener('click', () => {
-  // clear any orevious boxes
-  main.innerHTML = ''
-  // make new question box
-  createQuestionBox()
-
-  // populate fields of new question box
-  const quizQuestion = document.querySelector('.quiz__question')
-  quizQuestion.textContent = questionsArray[0][count].question
-  generateAnswers()
-
-  // increase count to control output
-  count++
-})
+startBtn.addEventListener('click', populateQuestionBox)
 
 // ***********************
 // FUNCTIONS
@@ -88,4 +75,19 @@ function generateAnswers() {
 
     btn.textContent = questionsArray[0][count].answers[attributeData]
   })
+}
+
+function populateQuestionBox() {
+  // clear any previous boxes
+  main.innerHTML = ''
+  // make new question box
+  createQuestionBox()
+
+  // populate fields of new question box
+  const quizQuestion = document.querySelector('.quiz__question')
+  quizQuestion.textContent = questionsArray[0][count].question
+  generateAnswers()
+
+  // increase count to control output
+  count++
 }

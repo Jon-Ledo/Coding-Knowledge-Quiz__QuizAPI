@@ -50,6 +50,26 @@ header p a:active {
 }
 
 /* QUIZ BOX STYLES */
+.quiz__start-btn {
+  background-color: #dc3434;
+  color: #ffffff;
+  padding: 1.5rem 4rem;
+  font-size: 3rem;
+  margin-top: 3rem;
+  border-radius: 10px;
+  border: none;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+}
+
+.quiz__start-btn:hover {
+  background-color: #f04b4b;
+}
+
+.quiz__start-btn:active {
+  background-color: #7e1414;
+}
+
 .quiz__container {
   border: 2px solid white;
   padding: 1.5rem;
