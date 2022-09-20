@@ -1,10 +1,17 @@
+// ***********************
 // GLOBAL VARIABLES
+// ***********************
 let count = 0
 const questionsArray = []
 const main = document.querySelector('main')
 const MY_API_KEY = 'uxxF74RXMUgiRSE4o3Njleo8ekoymf0aTh8L7MPU'
+const startBtn = document.querySelector('#quizStartBtn')
+const quizContainer = document.querySelector('.quiz__container')
 
+// ***********************
 // FETCH DATA
+// ***********************
+
 // build fetch request parameters
 const baseURL = new URL('https://quizapi.io/api/v1/questions')
 baseURL.search = new URLSearchParams({
@@ -19,11 +26,7 @@ window.addEventListener('DOMContentLoaded', () => {
   getData(baseURL)
 })
 
-// CLICK START
-const startBtn = document.querySelector('#quizStartBtn') // change name
-const quizContainer = document.querySelector('.quiz__container')
-// test clone node
-
+// START GAME
 startBtn.addEventListener('click', populateQuestionBox)
 
 // ***********************
@@ -68,26 +71,61 @@ function createQuestionBox() {
   createdDiv.append(createdHeading, createdAnswersDiv)
 }
 
-function generateAnswers() {
+function generateAnswersForBtns(correctAnswer) {
   const allBtns = document.querySelectorAll('button')
+
   allBtns.forEach((btn) => {
+    // store data to match against correct answer
     const attributeData = btn.dataset.answer
 
+    // dynamically update answers displayed on buttons
     btn.textContent = questionsArray[0][count].answers[attributeData]
+
+    // check user anwser
+    btn.addEventListener('click', (e) => {
+      if (attributeData === correctAnswer) {
+        isCorrectAnswer(e)
+
+        setTimeout(() => {
+          populateQuestionBox()
+        }, 800)
+      } else {
+        isWrongAnswer(e)
+
+        setTimeout(() => {
+          populateQuestionBox()
+        }, 800)
+      }
+    })
   })
 }
 
 function populateQuestionBox() {
-  // clear any previous boxes
-  main.innerHTML = ''
-  // make new question box
-  createQuestionBox()
+  if (count < 10) {
+    // clear any previous boxes
+    main.innerHTML = ''
+    // make new question box
+    createQuestionBox()
 
-  // populate fields of new question box
-  const quizQuestion = document.querySelector('.quiz__question')
-  quizQuestion.textContent = questionsArray[0][count].question
-  generateAnswers()
+    // populate fields of new question box
+    const quizQuestion = document.querySelector('.quiz__question')
+    quizQuestion.textContent = questionsArray[0][count].question
 
-  // increase count to control output
-  count++
+    const correctAnswer = questionsArray[0][count].correct_answer
+    generateAnswersForBtns(correctAnswer)
+
+    // increase count to control output
+    count++
+  } else {
+    // display final score
+    // final page state
+  }
+}
+
+function isCorrectAnswer(e) {
+  e.target.style.backgroundColor = 'green'
+}
+
+function isWrongAnswer(e) {
+  e.target.style.backgroundColor = 'red'
 }
