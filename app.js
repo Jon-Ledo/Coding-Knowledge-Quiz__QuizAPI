@@ -8,7 +8,8 @@ const MY_API_KEY = 'uxxF74RXMUgiRSE4o3Njleo8ekoymf0aTh8L7MPU'
 const startBtn = document.querySelector('#quizStartBtn')
 const quizContainer = document.querySelector('.quiz__container')
 const countdown = document.querySelector('#countdown')
-let currentTime = 6
+let currentTime = 60
+const notification = document.querySelector('.timer__notification-text')
 
 // ***********************
 // FETCH DATA
@@ -31,7 +32,9 @@ window.addEventListener('DOMContentLoaded', () => {
 // START GAME
 startBtn.addEventListener('click', () => {
   populateQuestionBox()
-  setInterval(timerCountdown, 1000)
+  const timerId = setInterval(() => {
+    timerCountdown(timerId)
+  }, 1000)
 })
 
 // ***********************
@@ -46,13 +49,13 @@ const getData = async (url) => {
   questionsArray.push(data)
 }
 
-function timerCountdown() {
-  if (currentTime >= 0) {
-    countdown.textContent = currentTime
-  } else {
-    clearInterval()
-  }
+function timerCountdown(id) {
+  countdown.textContent = currentTime
   currentTime--
+
+  if (currentTime < 0) {
+    clearInterval(id)
+  }
 }
 
 function createQuestionBox() {
@@ -99,13 +102,15 @@ function generateAnswersForBtns(correctAnswer) {
       if (attributeData === correctAnswer) {
         isCorrectAnswer(e)
 
-        addMoreTime()
+        addTime()
 
         setTimeout(() => {
           populateQuestionBox()
         }, 800)
       } else {
         isWrongAnswer(e)
+
+        minusTime()
 
         setTimeout(() => {
           populateQuestionBox()
@@ -138,11 +143,33 @@ function populateQuestionBox() {
 }
 
 function isCorrectAnswer(e) {
-  e.target.style.backgroundColor = 'green'
+  e.target.style.backgroundColor = '#3ae33a'
 }
 
 function isWrongAnswer(e) {
-  e.target.style.backgroundColor = 'red'
+  e.target.style.backgroundColor = '#dc3434'
 }
 
-function addMoreTime() {}
+function addTime() {
+  notification.textContent = '+4 seconds gained'
+  notification.style.visibility = 'visible'
+  notification.style.color = '#3ae33a'
+  currentTime += 5
+  countdown.textContent = currentTime
+
+  setTimeout(() => {
+    notification.style.visibility = 'hidden'
+  }, 600)
+}
+
+function minusTime() {
+  notification.textContent = '-4 seconds lost'
+  notification.style.visibility = 'visible'
+  notification.style.color = '#dc3434'
+  currentTime -= 5
+  countdown.textContent = currentTime
+
+  setTimeout(() => {
+    notification.style.visibility = 'hidden'
+  }, 600)
+}
