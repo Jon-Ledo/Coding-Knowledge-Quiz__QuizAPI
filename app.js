@@ -7,6 +7,8 @@ const main = document.querySelector('main')
 const MY_API_KEY = 'uxxF74RXMUgiRSE4o3Njleo8ekoymf0aTh8L7MPU'
 const startBtn = document.querySelector('#quizStartBtn')
 const quizContainer = document.querySelector('.quiz__container')
+const countdown = document.querySelector('#countdown')
+let currentTime = 6
 
 // ***********************
 // FETCH DATA
@@ -27,7 +29,10 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 
 // START GAME
-startBtn.addEventListener('click', populateQuestionBox)
+startBtn.addEventListener('click', () => {
+  populateQuestionBox()
+  setInterval(timerCountdown, 1000)
+})
 
 // ***********************
 // FUNCTIONS
@@ -39,7 +44,15 @@ const getData = async (url) => {
     .catch((error) => console.warn('Something went wrong', error))
 
   questionsArray.push(data)
-  console.log(questionsArray)
+}
+
+function timerCountdown() {
+  if (currentTime >= 0) {
+    countdown.textContent = currentTime
+  } else {
+    clearInterval()
+  }
+  currentTime--
 }
 
 function createQuestionBox() {
@@ -86,6 +99,8 @@ function generateAnswersForBtns(correctAnswer) {
       if (attributeData === correctAnswer) {
         isCorrectAnswer(e)
 
+        addMoreTime()
+
         setTimeout(() => {
           populateQuestionBox()
         }, 800)
@@ -129,3 +144,5 @@ function isCorrectAnswer(e) {
 function isWrongAnswer(e) {
   e.target.style.backgroundColor = 'red'
 }
+
+function addMoreTime() {}

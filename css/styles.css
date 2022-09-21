@@ -1,3 +1,4 @@
+/* GLOBAL STYLES */
 html {
   font-size: 62.5%;
 }
@@ -49,6 +50,36 @@ header p a:active {
   color: #6e250a;
 }
 
+/* TIMER STYLES */
+.timer {
+  margin: 4rem 0;
+  text-align: center;
+}
+
+.timer__container {
+  background-color: #111111;
+  width: 170px;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.timer__countdown {
+  font-size: 6rem;
+}
+
+.timer__notification-container {
+  margin-top: 2rem;
+  padding: 0.75rem;
+  border-radius: 5px;
+}
+
+.timer__notification-text {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3ae33a;
+  visibility: hidden;
+}
+
 /* QUIZ BOX STYLES */
 .quiz__start-btn {
   background-color: #dc3434;
@@ -56,7 +87,7 @@ header p a:active {
   padding: 1.5rem 4rem;
   font-size: 3rem;
   margin-top: 3rem;
-  border-radius: 10px;
+  border-radius: 1rem;
   border: none;
   letter-spacing: 1.5px;
   cursor: pointer;
