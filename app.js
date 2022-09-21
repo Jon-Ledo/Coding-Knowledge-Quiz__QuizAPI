@@ -8,7 +8,7 @@ const MY_API_KEY = 'uxxF74RXMUgiRSE4o3Njleo8ekoymf0aTh8L7MPU'
 const startBtn = document.querySelector('#quizStartBtn')
 const quizContainer = document.querySelector('.quiz__container')
 const countdown = document.querySelector('#countdown')
-let currentTime = 60
+let currentTime = 3
 const notification = document.querySelector('.timer__notification-text')
 
 // ***********************
@@ -53,8 +53,10 @@ function timerCountdown(id) {
   countdown.textContent = currentTime
   currentTime--
 
+  //when time runs out
   if (currentTime < 0) {
-    clearInterval(id)
+    clearInterval(id) //remove interval
+    triggerEndgame() // gameover
   }
 }
 
@@ -136,7 +138,8 @@ function populateQuestionBox() {
 
     // increase count to control output
     count++
-  } else {
+  } else if (count === 10) {
+    triggerEndgame()
     // display final score
     // final page state
   }
@@ -172,4 +175,59 @@ function minusTime() {
   setTimeout(() => {
     notification.style.visibility = 'hidden'
   }, 600)
+}
+
+function triggerEndgame() {
+  const gameOverText = document.querySelector('#gameOverText')
+
+  // display gameover texts
+  gameOverText.style.display = 'block'
+  setTimeout(() => {
+    gameOverText.textContent = `Your final time is ${currentTime}s`
+  }, 2000)
+
+  // remove alert
+  setTimeout(() => {
+    gameOverText.style.display = 'none'
+    // replace the questions box container
+    main.innerHTML = ''
+    createUserInput()
+  }, 4000)
+}
+
+function createUserInput() {
+  const createdForm = document.createElement('form')
+  const createdLabel = document.createElement('label')
+  const createdInput = document.createElement('input')
+  const createdBtn = document.createElement('button')
+
+  createdLabel.textContent = 'Enter name'
+  createdInput.setAttribute('type', 'text')
+  createdInput.setAttribute('maxLength', '8')
+  createdBtn.textContent = 'Submit'
+  createdBtn.setAttribute('type', 'submit')
+  createdBtn.classList.add('submit-btn')
+
+  createdForm.append(createdLabel, createdInput, createdBtn)
+  main.append(createdForm)
+
+  // new event listener
+  createdForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const userName = createdInput.value
+    displayHighScores(userName)
+  })
+}
+
+function displayHighScores(name) {
+  main.innerHTML = ''
+  const highScores = document.querySelector('#highScores')
+  const scoresContainer = document.querySelector('#scoresContainer')
+  const userName = document.querySelector('.score__user-name')
+  const userScore = document.querySelector('.score__user-score')
+
+  userName.textContent = name
+  userScore.textContent = currentTime
+
+  highScores.style.display = 'block'
 }
