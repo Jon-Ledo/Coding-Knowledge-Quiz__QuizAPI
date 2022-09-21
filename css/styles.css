@@ -18,6 +18,11 @@ body {
   text-shadow: 1px 1px #111111;
 }
 
+button {
+  border: none;
+  border-radius: 1rem;
+}
+
 /* HEADER STYLES */
 header {
   display: flex;
@@ -76,7 +81,6 @@ header p a:active {
 .timer__notification-text {
   font-size: 2rem;
   font-weight: bold;
-  color: #3ae33a;
   visibility: hidden;
 }
 
@@ -87,8 +91,6 @@ header p a:active {
   padding: 1.5rem 4rem;
   font-size: 3rem;
   margin-top: 3rem;
-  border-radius: 1rem;
-  border: none;
   letter-spacing: 1.5px;
   cursor: pointer;
 }
