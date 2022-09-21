@@ -84,6 +84,34 @@ header p a:active {
   visibility: hidden;
 }
 
+/* GAMEOVER  STYLES*/
+.game-over__text {
+  font-size: 3rem;
+  text-transform: uppercase;
+  display: none;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  font-size: 2.4rem;
+  align-items: center;
+}
+
+input[type='text'] {
+  font-size: 2rem;
+  width: 50%;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+  margin-top: 1rem;
+}
+
+.submit-btn {
+  background-color: #dc3434;
+  font-size: 1.8rem;
+  padding: 0.5rem 1rem;
+}
+
 /* QUIZ BOX STYLES */
 .quiz__start-btn {
   background-color: #dc3434;
@@ -126,4 +154,23 @@ header p a:active {
   padding: 1.5rem;
   font-size: 2rem;
   cursor: pointer;
+}
+
+/* SCORES SECTION STYLES */
+.scores-section {
+  display: none;
+  margin-top: 1rem;
+}
+.scores-section h3 {
+  font-size: 2.8rem;
+  text-decoration: underline;
+  margin-bottom: 0.5rem;
+}
+
+.score__container {
+  font-size: 1.6rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  text-transform: uppercase;
 }
