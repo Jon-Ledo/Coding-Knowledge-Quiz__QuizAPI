@@ -10,7 +10,7 @@ const MY_API_KEY = 'uxxF74RXMUgiRSE4o3Njleo8ekoymf0aTh8L7MPU'
 const startBtn = document.querySelector('#quizStartBtn')
 const quizContainer = document.querySelector('.quiz__container')
 const countdown = document.querySelector('#countdown')
-let currentTime = 5
+let currentTime = 60
 const notification = document.querySelector('.timer__notification-text')
 
 // ***********************
