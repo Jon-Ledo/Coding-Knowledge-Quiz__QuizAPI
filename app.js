@@ -2,13 +2,15 @@
 // GLOBAL VARIABLES
 // ***********************
 let count = 0
+let scoresArray
+let isGameOver = false
 const questionsArray = []
 const main = document.querySelector('main')
 const MY_API_KEY = 'uxxF74RXMUgiRSE4o3Njleo8ekoymf0aTh8L7MPU'
 const startBtn = document.querySelector('#quizStartBtn')
 const quizContainer = document.querySelector('.quiz__container')
 const countdown = document.querySelector('#countdown')
-let currentTime = 3
+let currentTime = 5
 const notification = document.querySelector('.timer__notification-text')
 
 // ***********************
@@ -24,9 +26,12 @@ baseURL.search = new URLSearchParams({
   tags: 'html',
 })
 
-// on load, fetch and store data
+// on load,
+// fetch and store data (API and localstorage)
 window.addEventListener('DOMContentLoaded', () => {
   getData(baseURL)
+  getScoreData()
+  sortHighScores()
 })
 
 // START GAME
@@ -54,7 +59,7 @@ function timerCountdown(id) {
   currentTime--
 
   //when time runs out
-  if (currentTime < 0) {
+  if (currentTime < 0 || isGameOver) {
     clearInterval(id) //remove interval
     triggerEndgame() // gameover
   }
@@ -140,8 +145,6 @@ function populateQuestionBox() {
     count++
   } else if (count === 10) {
     triggerEndgame()
-    // display final score
-    // final page state
   }
 }
 
@@ -175,9 +178,14 @@ function minusTime() {
   setTimeout(() => {
     notification.style.visibility = 'hidden'
   }, 600)
+
+  if (currentTime < 0) {
+    isGameOver = true
+  }
 }
 
 function triggerEndgame() {
+  isGameOver = true
   const gameOverText = document.querySelector('#gameOverText')
 
   // display gameover texts
@@ -222,12 +230,43 @@ function createUserInput() {
 function displayHighScores(name) {
   main.innerHTML = ''
   const highScores = document.querySelector('#highScores')
-  const scoresContainer = document.querySelector('#scoresContainer')
-  const userName = document.querySelector('.score__user-name')
-  const userScore = document.querySelector('.score__user-score')
+  const scoreContainer = document.querySelector('.score__container')
 
-  userName.textContent = name
-  userScore.textContent = currentTime
+  storeScoreData(name, currentTime)
+
+  sortHighScores()
+
+  scoresArray.forEach((highscore, index) => {
+    // clone node of score__container
+    const clone = scoreContainer.cloneNode(true)
+    const userName = clone.querySelector('.score__user-name')
+    const userScore = clone.querySelector('.score__user-score')
+
+    if (index < 5) {
+      userName.textContent = highscore[0]
+      userScore.textContent = highscore[1]
+      highScores.appendChild(clone)
+    } else return
+  })
 
   highScores.style.display = 'block'
+}
+
+function storeScoreData(name, score) {
+  scoresArray.push([name, score])
+  localStorage.setItem('scores', JSON.stringify(scoresArray))
+}
+
+function getScoreData() {
+  if (localStorage.getItem('scores')) {
+    scoresArray = JSON.parse(localStorage.getItem('scores'))
+  } else {
+    scoresArray = []
+  }
+}
+
+function sortHighScores() {
+  scoresArray.sort((a, b) => {
+    return b[1] - a[1]
+  })
 }
