@@ -30,18 +30,22 @@
         <span class="timer__notification-text"></span>
       </div>
     </section>
+
     <section class="game-over">
       <span class="game-over__text" id="gameOverText">game over</span>
     </section>
 
-    <!-- START OF QUIZ -->
-    <main class="quiz">
-      <button type="button" class="quiz__start-btn" id="quizStartBtn">
-        Start Quiz
-      </button>
-    </main>
+    <section class="highscore">
+      <div class="highscore__btn" id="viewHighScores">View Highscores</div>
+    </section>
 
-    <section class="scores-section" id="highScores">
+    <!-- START OF QUIZ -->
+    <main class="quiz"></main>
+    <button type="button" class="quiz__start-btn" id="quizStartBtn">
+      Start Quiz
+    </button>
+
+    <section class="scores-section hidden" id="highScores">
       <h3>Highscores</h3>
       <div class="score__container">
         <span class="score__user-name"></span>
