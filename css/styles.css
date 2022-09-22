@@ -57,7 +57,7 @@ header p a:active {
 
 /* TIMER STYLES */
 .timer {
-  margin: 4rem 0;
+  margin-bottom: 4rem;
   text-align: center;
 }
 
@@ -177,6 +177,10 @@ input[type='text'] {
   justify-content: space-between;
   padding: 0.3rem 0;
   text-transform: uppercase;
+}
+
+.highscore {
+  margin: 2rem 0 1rem 0;
 }
 
 .highscore__btn {
