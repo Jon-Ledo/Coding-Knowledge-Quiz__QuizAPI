@@ -12,6 +12,8 @@ const quizContainer = document.querySelector('.quiz__container')
 const countdown = document.querySelector('#countdown')
 let currentTime = 60
 const notification = document.querySelector('.timer__notification-text')
+const viewHighScoresBtn = document.querySelector('#viewHighScores')
+const highScores = document.querySelector('#highScores')
 
 // ***********************
 // FETCH DATA
@@ -36,10 +38,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // START GAME
 startBtn.addEventListener('click', () => {
+  startBtn.classList.add('hidden')
   populateQuestionBox()
   const timerId = setInterval(() => {
     timerCountdown(timerId)
   }, 1000)
+})
+
+// View High Scores
+viewHighScoresBtn.addEventListener('click', () => {
+  displayHighScores()
+  highScores.classList.toggle('hidden')
 })
 
 // ***********************
@@ -160,7 +169,7 @@ function addTime() {
   notification.textContent = '+4 seconds gained'
   notification.style.visibility = 'visible'
   notification.style.color = '#3ae33a'
-  currentTime += 5
+  currentTime += 4
   countdown.textContent = currentTime
 
   setTimeout(() => {
@@ -172,7 +181,7 @@ function minusTime() {
   notification.textContent = '-4 seconds lost'
   notification.style.visibility = 'visible'
   notification.style.color = '#dc3434'
-  currentTime -= 5
+  currentTime -= 4
   countdown.textContent = currentTime
 
   setTimeout(() => {
@@ -228,28 +237,27 @@ function createUserInput() {
 }
 
 function displayHighScores(name) {
-  main.innerHTML = ''
-  const highScores = document.querySelector('#highScores')
-  const scoreContainer = document.querySelector('.score__container')
+  const nodesArray = Array.from(highScores.children)
 
-  storeScoreData(name, currentTime)
-
-  sortHighScores()
-
-  scoresArray.forEach((highscore, index) => {
-    // clone node of score__container
-    const clone = scoreContainer.cloneNode(true)
-    const userName = clone.querySelector('.score__user-name')
-    const userScore = clone.querySelector('.score__user-score')
-
-    if (index < 5) {
-      userName.textContent = highscore[0]
-      userScore.textContent = highscore[1]
-      highScores.appendChild(clone)
-    } else return
-  })
-
-  highScores.style.display = 'block'
+  if (isGameOver) {
+    main.innerHTML = ''
+    nodesArray.forEach((child, index) => {
+      if (index > 1) {
+        child.remove()
+      }
+    })
+    storeScoreData(name, currentTime)
+    createHighScoreList()
+    highScores.classList.remove('hidden')
+    isGameOver = false
+  } else {
+    nodesArray.forEach((child, index) => {
+      if (index > 1) {
+        child.remove()
+      }
+    })
+    createHighScoreList()
+  }
 }
 
 function storeScoreData(name, score) {
@@ -266,7 +274,28 @@ function getScoreData() {
 }
 
 function sortHighScores() {
-  scoresArray.sort((a, b) => {
-    return b[1] - a[1]
+  if (scoresArray.length > 1) {
+    scoresArray.sort((a, b) => {
+      return b[1] - a[1]
+    })
+  }
+}
+
+function createHighScoreList() {
+  const scoreContainer = document.querySelector('.score__container')
+
+  sortHighScores()
+
+  scoresArray.forEach((highscore, index) => {
+    // clone node of score__container
+    const clone = scoreContainer.cloneNode(true)
+    const userName = clone.querySelector('.score__user-name')
+    const userScore = clone.querySelector('.score__user-score')
+
+    if (index < 5) {
+      userName.textContent = highscore[0]
+      userScore.textContent = highscore[1]
+      highScores.appendChild(clone)
+    } else return
   })
 }
