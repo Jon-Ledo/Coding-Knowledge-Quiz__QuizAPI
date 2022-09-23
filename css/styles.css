@@ -113,7 +113,8 @@ input[type='text'] {
 }
 
 /* QUIZ BOX STYLES */
-.quiz__start-btn {
+.quiz__start-btn,
+.quiz__reset-btn {
   background-color: #dc3434;
   color: #ffffff;
   padding: 1.5rem 4rem;
@@ -123,11 +124,13 @@ input[type='text'] {
   cursor: pointer;
 }
 
-.quiz__start-btn:hover {
+.quiz__start-btn:hover,
+.quiz__reset-btn:hover {
   background-color: #f04b4b;
 }
 
-.quiz__start-btn:active {
+.quiz__start-btn:active,
+.quiz__reset-btn:active {
   background-color: #7e1414;
 }
 
