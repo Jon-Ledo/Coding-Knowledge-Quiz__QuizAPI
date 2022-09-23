@@ -4,7 +4,7 @@
 let count = 0
 let scoresArray
 let isGameOver = false
-const questionsArray = []
+let questionsArray = []
 const main = document.querySelector('main')
 const MY_API_KEY = 'uxxF74RXMUgiRSE4o3Njleo8ekoymf0aTh8L7MPU'
 const startBtn = document.querySelector('#quizStartBtn')
@@ -37,13 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 
 // START GAME
-startBtn.addEventListener('click', () => {
-  startBtn.classList.add('hidden')
-  populateQuestionBox()
-  const timerId = setInterval(() => {
-    timerCountdown(timerId)
-  }, 1000)
-})
+startBtn.addEventListener('click', startGame)
 
 // View High Scores
 viewHighScoresBtn.addEventListener('click', () => {
@@ -61,6 +55,14 @@ const getData = async (url) => {
     .catch((error) => console.warn('Something went wrong', error))
 
   questionsArray.push(data)
+}
+
+function startGame() {
+  startBtn.classList.add('hidden')
+  populateQuestionBox()
+  const timerId = setInterval(() => {
+    timerCountdown(timerId)
+  }, 1000)
 }
 
 function timerCountdown(id) {
@@ -104,7 +106,8 @@ function createQuestionBox() {
 }
 
 function generateAnswersForBtns(correctAnswer) {
-  const allBtns = document.querySelectorAll('button')
+  // select by data-attr to avoid tampering with other btns
+  const allBtns = document.querySelectorAll('[data-answer]')
 
   allBtns.forEach((btn) => {
     // store data to match against correct answer
@@ -233,6 +236,8 @@ function createUserInput() {
     e.preventDefault()
     const userName = createdInput.value
     displayHighScores(userName)
+
+    resetQuizData()
   })
 }
 
@@ -298,4 +303,28 @@ function createHighScoreList() {
       highScores.appendChild(clone)
     } else return
   })
+}
+
+const quizResetBtn = document.querySelector('#quizResetBtn')
+
+function resetQuizData() {
+  currentTime = 60
+  count = 0
+  isGameOver = false
+  questionsArray = []
+  getData(baseURL)
+
+  quizResetBtn.classList.remove('hidden')
+
+  // event to restart quiz
+  quizResetBtn.addEventListener('click', restartQuiz)
+}
+
+function restartQuiz() {
+  quizResetBtn.classList.add('hidden')
+  highScores.classList.add('hidden')
+  populateQuestionBox()
+  const timerId = setInterval(() => {
+    timerCountdown(timerId)
+  }, 1000)
 }
