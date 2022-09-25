@@ -1,8 +1,14 @@
 # Code Quiz
 
 ## Links
+- Live Site URL: [live site](https://jon-ledo.github.io/Coding-Knowledge-Quiz__QuizAPI/)
+- Repo: [repo](https://github.com/Jon-Ledo/Coding-Knowledge-Quiz__QuizAPI)
 
 ## Tech Used
+- HTML
+- CSS
+- JavaScript
+- API [link to QuizAPI](https://quizapi.io/)
 
 ## Description
 
