@@ -27,8 +27,6 @@ are used to generate the questions for the app.
 
 User clicks on the Start Quiz button to begin a timed quiz game. 
 
-![preview of generated questions](./Assets/questions.JPG)
-
 User anwsers questions by clicking on the buttons. 
 If correct, 4 seconds is added onto the timer above, else 4 seconds is deducted. 
 
