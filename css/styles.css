@@ -208,7 +208,7 @@ input[type='text'] {
   }
 }
 
-@media (max-width: 5000px) {
+@media (max-width: 500px) {
   body {
     width: 95%;
     margin: 10% auto 0;
