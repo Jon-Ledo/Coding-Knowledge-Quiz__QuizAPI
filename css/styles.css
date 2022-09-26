@@ -198,3 +198,19 @@ input[type='text'] {
 .highscore__btn:active {
   color: #6e250a;
 }
+
+/* MEDIA QUERIES */
+@media (max-width: 790px) {
+  body {
+    width: 90%;
+    margin: 20% auto 0;
+    justify-content: initial;
+  }
+}
+
+@media (max-width: 5000px) {
+  body {
+    width: 95%;
+    margin: 10% auto 0;
+  }
+}
